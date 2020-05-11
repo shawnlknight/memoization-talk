@@ -5,6 +5,9 @@ theme: uncover
 class: invert
 ---
 <style>
+  section {
+    background: #2d3436 !important;
+  }
   h1,
   h2,
   h3,
