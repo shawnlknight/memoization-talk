@@ -48,6 +48,14 @@ So what exactly is memoization?
 
 ---
 
+### How does it work?
+
+* Caching the values that the function returns after its initial execution.
+* If the input values remain the same, the memoized function returns the cahced response.
+* The program does not have to recalculate anything.
+
+---
+
 <!--
 
 Here is a very simple example to show how this technique works
@@ -70,4 +78,60 @@ console.log(memAdd(1, 2))
 // add
 // 3
 // 3
+
 ```
+
+<!--
+
+Live code `inefficientSquare` example
+
+-->
+
+---
+
+### Some live coding!!!
+
+---
+
+<!--
+
+A fundamental rule when using memoization is you should only use them with pure functions.
+There should be no side effects in the function and given a set of argument params to the function,
+we should always expect the same result.
+
+Since the variable c is outside of the scoped function, it is not pure. The final result should be 5
+but the memoization library does not know the variable c has been updated and sees the inputs are the
+same so it returns the wrong result of 4.
+
+-->
+
+### Use with pure functions only
+
+```javascript
+let c = 1
+function sideEffectAdd(a, b) {
+ console.log('sideEffectAdd')
+ return a + b + c
+}
+const memAdd = memoize(sideEffectAdd)
+console.log(memAdd(1, 2))
+console.log(memAdd(1, 2))
+c++
+console.log(memAdd(1, 2))
+
+// will output the following:
+// sideEffectAdd
+// 4
+// 4
+// 4
+```
+
+---
+
+### Resources
+
+* https://dev.to/nas5w/what-is-memoization-4lod
+* https://medium.com/better-programming/react-memo-vs-memoize-71f85eb4e1a
+* https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19
+
+---
