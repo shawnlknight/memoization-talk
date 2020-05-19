@@ -58,12 +58,46 @@ So what exactly is memoization?
 
 <!--
 
-Here is a very simple example to show how this technique works
+Here is a very simple example to show how this technique works.
+
+We don't need to worry about caching the results here since a function
+like this is relatively cheap to execute. However, imagine a function
+with an execution included a lot of data clean up and/or mapping of
+different properties.
 
 -->
 
 ### Simple Example
 
+Before memoization
+```javascript
+function add(a, b) {
+ console.log('add')
+ return a + b
+}
+console.log(add(1, 2))
+console.log(add(1, 2))
+
+// will output the following:
+// add
+// 3
+// add
+// 3
+
+```
+---
+
+<!--
+
+You will see that `add` was logged twice.
+
+So let's add some caching to this function!
+
+-->
+
+### Simple Example cont...
+
+After memoization
 ```javascript
 function add(a, b) {
  console.log('add')
@@ -84,6 +118,76 @@ console.log(memAdd(1, 2))
 <!--
 
 Live code `inefficientSquare` example
+
+# Step 1:
+const squareNum = num => num * num
+
+const start = new Date()
+const result1 = squareNum(40000)
+console.log('result 1:', result1)
+console.log('process time:', new Date() - start)
+
+const start2 = new Date()
+const result2 = squareNum(40000)
+console.log('result 2:', result2)
+console.log('process time:', new Date() - start2)
+
+---------------------------------------------------
+
+# Step 2:
+const inefficientSquare = num => {
+  let total = 0
+  for (let i = 0; i < num; i++) {
+    for (let j = 0; j < num; j++) {
+      total++
+    }
+  }
+  return total
+}
+
+const start = new Date()
+const result1 = inefficientSquare(40000)
+console.log('result 1:', result1)
+console.log('process time:', new Date() - start)
+
+const start2 = new Date()
+const result2 = inefficientSquare(40000)
+console.log('result 2:', result2)
+console.log('process time:', new Date() - start2)
+
+---------------------------------------------------
+
+# Step 3:
+NOTE: We are using JSON.stringify to create the key
+but would not want to use it outside of an example.
+It will not serialize certain inputs like functions or Symbols
+or anything that you would not find in JSON.
+// Simple memoization function example
+// Sourced from: https://dev.to/nas5w/what-is-memoization-4lod
+const memoize = func => {
+  // Create cache for results
+  const results = {}
+
+  return (...args) => {
+    // Create a key for our cache
+    const argsKey = JSON.stringify(args)
+    // Only execute func if no cache val
+    if(!results[argsKey]) {
+      results[argsKey] = func(...args)
+    }
+    return results[argsKey]
+  }
+}
+
+const inefficientSquare = memoize(num => {
+  let total = 0
+  for(let i = 0; i < num; i++) {
+    for(let j = 0; j < num; j++) {
+      total++
+    }
+  }
+  return total
+})
 
 -->
 
