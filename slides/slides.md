@@ -51,7 +51,7 @@ So what exactly is memoization?
 ### How does it work?
 
 * Caching the values that the function returns after its initial execution.
-* If the input values remain the same, the memoized function returns the cahced response.
+* If the input values remain the same, the memoized function returns the cached response.
 * The program does not have to recalculate anything.
 
 ---
@@ -115,6 +115,8 @@ console.log(memAdd(1, 2))
 
 ```
 
+---
+
 <!--
 
 Live code `inefficientSquare` example
@@ -169,6 +171,7 @@ const memoize = func => {
   const results = {}
 
   return (...args) => {
+    console.log('results', results)
     // Create a key for our cache
     const argsKey = JSON.stringify(args)
     // Only execute func if no cache val
@@ -191,9 +194,11 @@ const inefficientSquare = memoize(num => {
 
 -->
 
+### Some live coding!!!
+
 ---
 
-### Some live coding!!!
+### Some gotchas to remember
 
 ---
 
@@ -232,10 +237,23 @@ console.log(memAdd(1, 2))
 
 ---
 
+<!--
+
+Be careful when memoizing functions that make network calls to other
+apis where the data could have changed.
+Likewise, be careful with using this technique on DB calls.
+
+-->
+
+### Network & database calls
+
+* Expire cache after given period of time
+* Clear cache manually if needed
+
+---
+
 ### Resources
 
 * https://dev.to/nas5w/what-is-memoization-4lod
 * https://medium.com/better-programming/react-memo-vs-memoize-71f85eb4e1a
 * https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19
-
----
