@@ -192,6 +192,42 @@ const inefficientSquare = memoize(num => {
   return total
 })
 
+---------------------------------------------------
+
+# Step 4:
+With our current memoize function, the order of the parameters matters
+if we want it to be able to return a cached value.
+
+What if we had the following function we wanted to memoize? The output value
+will be correct but it will not use the cache the second time.
+
+const sum = (a, b) => {
+  console.log('adding numbers')
+  return a + b
+}
+const memoizedSum = memoize(sum)
+
+const addResult1 = memoizedSum(1, 2)
+const addResult2 = memoizedSum(2, 1)
+console.log('addResult1', addResult1)
+console.log('addResult2', addResult2)
+
+---------------------------------------------------
+
+# Step 5:
+What if we wanted to memoize a function that takes in a function as an argument?
+
+const functionArgument = (fn, num1, num2) => fn(num1, num2)
+const memoizeFunctionArgument = memoize(functionArgument)
+
+const addResult = memoizeFunctionArgument(sum, 2, 2)
+console.log('addResult', addResult)
+
+const subtractResult = memoizeFunctionArgument(subtract, 2, 2)
+console.log('subtractResult', subtractResult)
+
+The first time it runs, our cache key gets set as '[null,2,2]' b/c JSON.stringify sets
+our function argument as `null`.
 -->
 
 ### Some live coding!!!
