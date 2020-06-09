@@ -70,13 +70,14 @@ different properties.
 ### Simple Example
 
 Before memoization
+
 ```javascript
-function add(a, b) {
+function sum(a, b) {
  console.log('add')
  return a + b
 }
-console.log(add(1, 2))
-console.log(add(1, 2))
+console.log(sum(1, 2))
+console.log(sum(1, 2))
 
 // will output the following:
 // add
@@ -98,15 +99,16 @@ So let's add some caching to this function!
 ### Simple Example cont...
 
 After memoization
+
 ```javascript
-function add(a, b) {
+function sum(a, b) {
  console.log('add')
  return a + b
 }
 
-const memAdd = memoize(add)
-console.log(memAdd(1, 2))
-console.log(memAdd(1, 2))
+const memSum = memoize(sum)
+console.log(memSum(1, 2))
+console.log(memSum(1, 2))
 
 // will output the following:
 // add
@@ -122,6 +124,8 @@ console.log(memAdd(1, 2))
 Live code `inefficientSquare` example
 
 # Step 1:
+
+```javascript
 const squareNum = num => num * num
 
 const start = new Date()
@@ -133,10 +137,13 @@ const start2 = new Date()
 const result2 = squareNum(40000)
 console.log('result 2:', result2)
 console.log('process time:', new Date() - start2)
+```
 
 ---------------------------------------------------
 
 # Step 2:
+
+```javascript
 const inefficientSquare = num => {
   let total = 0
   for (let i = 0; i < num; i++) {
@@ -156,16 +163,20 @@ const start2 = new Date()
 const result2 = inefficientSquare(40000)
 console.log('result 2:', result2)
 console.log('process time:', new Date() - start2)
+```
 
 ---------------------------------------------------
 
 # Step 3:
+
 NOTE: We are using JSON.stringify to create the key
 but would not want to use it outside of an example.
-It will not serialize certain inputs like functions or Symbols
+As is, it will not serialize certain inputs like functions or Symbols
 or anything that you would not find in JSON.
 // Simple memoization function example
 // Sourced from: https://dev.to/nas5w/what-is-memoization-4lod
+
+```javascript
 const memoize = func => {
   // Create cache for results
   const results = {}
@@ -191,16 +202,19 @@ const inefficientSquare = memoize(num => {
   }
   return total
 })
+```
 
 ---------------------------------------------------
 
 # Step 4:
+
 With our current memoize function, the order of the parameters matters
 if we want it to be able to return a cached value.
 
 What if we had the following function we wanted to memoize? The output value
 will be correct but it will not use the cache the second time.
 
+```javascript
 const sum = (a, b) => {
   console.log('adding numbers')
   return a + b
@@ -211,34 +225,37 @@ const addResult1 = memoizedSum(1, 2)
 const addResult2 = memoizedSum(2, 1)
 console.log('addResult1', addResult1)
 console.log('addResult2', addResult2)
+```
 
 ---------------------------------------------------
 
 # Step 5:
+
 What if we wanted to memoize a function that takes in a function as an argument?
 
+```javascript
 const functionArgument = (fn, num1, num2) => fn(num1, num2)
 const memoizeFunctionArgument = memoize(functionArgument)
 
 const addResult = memoizeFunctionArgument(sum, 2, 2)
+const addResult2 = memoizeFunctionArgument(sum, 2, 2)
 console.log('addResult', addResult)
+console.log('addResult2', addResult2)
 
+
+const subtract = (a, b) => {
+  return a - b
+}
 const subtractResult = memoizeFunctionArgument(subtract, 2, 2)
 console.log('subtractResult', subtractResult)
+```
 
 The first time it runs, our cache key gets set as '[null,2,2]' b/c JSON.stringify sets
 our function argument as `null`.
--->
 
-### Some live coding!!!
+---------------------------------------------------
 
----
-
-### Some gotchas to remember
-
----
-
-<!--
+# Step 6:
 
 A fundamental rule when using memoization is you should only use them with pure functions.
 There should be no side effects in the function and given a set of argument params to the function,
@@ -248,13 +265,9 @@ Since the variable c is outside of the scoped function, it is not pure. The fina
 but the memoization library does not know the variable c has been updated and sees the inputs are the
 same so it returns the wrong result of 4.
 
--->
-
-### Use with pure functions only
-
 ```javascript
 let c = 1
-function sideEffectAdd(a, b) {
+const sideEffectAdd = (a, b) => {
  console.log('sideEffectAdd')
  return a + b + c
 }
@@ -270,6 +283,13 @@ console.log(memAdd(1, 2))
 // 4
 // 4
 ```
+-->
+
+### Some live coding!!!
+
+---
+
+### Some other things to remember
 
 ---
 
