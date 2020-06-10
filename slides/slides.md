@@ -96,8 +96,6 @@ So let's add some caching to this function!
 
 -->
 
-### Simple Example cont...
-
 After memoization
 
 ```javascript
@@ -121,7 +119,7 @@ console.log(memSum(1, 2))
 
 <!--
 
-Live code `inefficientSquare` example
+Live coding!!!
 
 # Step 1:
 
@@ -303,8 +301,74 @@ Likewise, be careful with using this technique on DB calls.
 
 ### Network & database calls
 
+* Be wary of using memoization for this and know the possible issues
 * Expire cache after given period of time
 * Clear cache manually if needed
+
+---
+
+### React.memo & useMemo
+
+---
+<!--
+
+React.memo is a higher order component. It’s similar to React.PureComponent but
+for function components instead of classes.
+
+If your function component renders the same result given the same props, you
+can wrap it in a call to React.memo for a performance boost in some cases by
+memoizing the result. This means that React will skip rendering the component,
+and reuse the last rendered result.
+
+React.memo only checks for prop changes. If your function component wrapped in
+React.memo has a useState or useContext Hook in its implementation, it will still
+rerender when state or context change.
+
+By default it will only shallowly compare complex objects in the props object.
+If you want control over the comparison, you can also provide a custom comparison
+function as the second argument.
+
+-->
+
+### React.memo
+
+```javascript
+const MyComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+})
+```
+
+---
+
+<!--
+
+Returns a memoized value.
+
+Pass a “create” function and an array of dependencies. useMemo will only
+recompute the memoized value when one of the dependencies has changed. T
+his optimization helps to avoid expensive calculations on every render.
+
+Remember that the function passed to useMemo runs during rendering. Don’t
+do anything there that you wouldn’t normally do while rendering. For example,
+side effects belong in useEffect, not useMemo.
+
+If no array is provided, a new value will be computed on every render.
+
+You may rely on useMemo as a performance optimization, not as a semantic
+guarantee. In the future, React may choose to “forget” some previously
+memoized values and recalculate them on next render, e.g. to free memory
+for offscreen components. Write your code so that it still works without
+useMemo — and then add it to optimize performance.
+
+-->
+
+### useMemo
+
+```javascript
+const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(a, b), [a, b]
+})
+```
 
 ---
 
@@ -313,3 +377,7 @@ Likewise, be careful with using this technique on DB calls.
 * https://dev.to/nas5w/what-is-memoization-4lod
 * https://medium.com/better-programming/react-memo-vs-memoize-71f85eb4e1a
 * https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19
+* https://reactjs.org/docs/hooks-reference.html#usememo
+* https://reactjs.org/docs/react-api.html#reactmemo
+* https://www.digitalocean.com/community/tutorials/react-usememo
+* https://www.digitalocean.com/community/tutorials/react-learning-react-memo
