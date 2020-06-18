@@ -372,6 +372,36 @@ const memoizedValue = useMemo(() => {
 
 ---
 
+<!--
+In this example, the useMemo function would run on the first render.
+It would block the thread until the expensive functions complete, as
+useMemo runs in the render. Initially, this won’t look as clean as useEffect,
+since useEffect can render a loading spinner until the expensive functions
+finish and the effects fire off.
+
+However, the expensive functions would never
+fire off again if listOfItems never changed and we would still get the return
+value from them. It would make these expensive functions seem instantaneous.
+This is ideal of you have an expensive, synchronous function or two.
+
+-->
+
+#### useMemo example
+
+```javascript
+const List = useMemo(
+  () =>
+  listOfItems.map(item => ({
+    ...item,
+    itemProp1: expensiveFunction(props.first),
+    itemProp2: anotherPriceyFunction(props.second)
+  })),
+  [listOfItems]
+)
+```
+
+---
+
 ### Resources
 
 * https://dev.to/nas5w/what-is-memoization-4lod
