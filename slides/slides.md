@@ -32,7 +32,14 @@ Welcome everyone to my talk on memoization
 
 ---
 
+<!--
+Give some background on what I do and what I have been working on.
+
+Explain why I came across memoization.
+-->
+
 ### Shawn Leberknight
+
 *Software Engineer* - **Somo Global**
 
 ---
@@ -351,9 +358,9 @@ const MyComponent = React.memo(function MyComponent(props) {
 
 ```javascript
 class CounterComponent extends Component {
-  state = { buttonPressedCount: 0 };
+  state = { buttonPressedCount: 0 }
   render() {
-    const { buttonPressedCount } = this.state;
+    const { buttonPressedCount } = this.state
     return (
       <div className="new-component">
         <h4>Button Pressed Count: {buttonPressedCount}</h4>
@@ -366,7 +373,7 @@ class CounterComponent extends Component {
         </button>
         <Banner type="info" />
       </div>
-    );
+    )
   }
 }
 ```
@@ -385,11 +392,12 @@ to it haven’t changed.
 
 ```javascript
 const Banner = props => {
-  const { type } = props;
+  const { type } = props
 
   if (type === "info") {
-    return <div className="info-banner">I am an info banner</div>;
+    return <div className="info-banner">I am an info banner</div>
   }
+  return <div className="default-banner">I am an default banner</div>
 }
 ```
 
@@ -410,6 +418,7 @@ const Banner = React.memo(props => {
   if (type === "info") {
     return <div className="info-banner">I am an info banner</div>
   }
+  return <div className="default-banner">I am an default banner</div>
 })
 ```
 
@@ -458,9 +467,13 @@ The expensive functions would never fire off again if listOfItems never
 changed and we would still get the return value from them. It would make
 these expensive functions seem instantaneous.
 This is ideal of you have an expensive, synchronous function or two.
+
+*NOTE: Every value referenced inside the function should also appear in the
+dependencies array
+Dependency array should be: [listOfItems, props.first, props.second]
 -->
 
-#### useMemo example
+### useMemo example
 
 ```javascript
 const List = useMemo(
@@ -471,6 +484,30 @@ const List = useMemo(
     itemProp2: anotherPriceyFunction(props.second)
   })),
   [listOfItems]
+)
+```
+
+---
+
+<!--
+Returns a memoized callback.
+
+Pass an inline callback and an array of dependencies.
+useCallback will return a memoized version of the
+callback that only changes if one of the dependencies
+has changed. This is useful when passing callbacks to
+optimized child components that rely on reference
+equality to prevent unnecessary renders (e.g. shouldComponentUpdate)
+-->
+
+### useCallback
+
+```javascript
+const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b],
 )
 ```
 
