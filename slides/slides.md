@@ -7,6 +7,7 @@ class: invert
 <style>
   section {
     background: #2d3436 !important;
+    padding: 20px !important;
   }
   h1,
   h2,
@@ -15,6 +16,10 @@ class: invert
   h5,
   h6 {
     color: #ff7675;
+  }
+
+  code {
+    background: pink;
   }
 </style>
 <!--
@@ -322,7 +327,7 @@ and reuse the last rendered result.
 
 React.memo only checks for prop changes. If your function component wrapped in
 React.memo has a useState or useContext Hook in its implementation, it will still
-rerender when state or context change.
+re-render when state or context change.
 
 By default it will only shallowly compare complex objects in the props object.
 If you want control over the comparison, you can also provide a custom comparison
@@ -340,13 +345,83 @@ const MyComponent = React.memo(function MyComponent(props) {
 
 ---
 
+#### React.memo example
+
+```javascript
+class CounterComponent extends Component {
+  state = { buttonPressedCount: 0 };
+  render() {
+    const { buttonPressedCount } = this.state;
+    return (
+      <div className="new-component">
+        <h4>Button Pressed Count: {buttonPressedCount}</h4>
+        <button
+          onClick={() =>
+            this.setState({ buttonPressedCount: buttonPressedCount + 1 })
+          }
+        >
+          Increase Count
+        </button>
+        <Banner type="info" />
+      </div>
+    );
+  }
+}
+```
+
 <!--
+In our CounterComponent, every time we click the button we
+increase the buttonPressedCount variable which causes a re-render
+which is what you would expect. The problem with this is that the
+Banner component also re-renders even though the props being passed
+to it haven’t changed.
+-->
+
+---
+
+#### Banner component
+
+```javascript
+const Banner = props => {
+  const { type } = props;
+
+  if (type === "info") {
+    return <div className="info-banner">I am an info banner</div>;
+  }
+}
+```
+
+---
+
+<!--
+To circumvent this, we use memo which acts like PureComponent
+in the fact that it will stop re-renders when the props haven’t
+changed. Our code updated looks like
+-->
+
+#### Banner component with memo
+
+```javascript
+const Banner = React.memo(props => {
+  const { type } = props
+
+  if (type === "info") {
+    return <div className="info-banner">I am an info banner</div>
+  }
+})
+```
+
+---
+
+<!--
+
+# useMemo
 
 Returns a memoized value.
 
 Pass a “create” function and an array of dependencies. useMemo will only
-recompute the memoized value when one of the dependencies has changed. T
-his optimization helps to avoid expensive calculations on every render.
+recompute the memoized value when one of the dependencies has changed. This
+optimization helps to avoid expensive calculations on every render.
 
 Remember that the function passed to useMemo runs during rendering. Don’t
 do anything there that you wouldn’t normally do while rendering. For example,
@@ -375,15 +450,12 @@ const memoizedValue = useMemo(() => {
 <!--
 In this example, the useMemo function would run on the first render.
 It would block the thread until the expensive functions complete, as
-useMemo runs in the render. Initially, this won’t look as clean as useEffect,
-since useEffect can render a loading spinner until the expensive functions
-finish and the effects fire off.
+useMemo runs in the render.
 
-However, the expensive functions would never
-fire off again if listOfItems never changed and we would still get the return
-value from them. It would make these expensive functions seem instantaneous.
+The expensive functions would never fire off again if listOfItems never
+changed and we would still get the return value from them. It would make
+these expensive functions seem instantaneous.
 This is ideal of you have an expensive, synchronous function or two.
-
 -->
 
 #### useMemo example
