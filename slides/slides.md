@@ -42,8 +42,10 @@ Welcome everyone to my talk on memoization
 So what exactly is memoization?
 
 - A technique to optimize a function in order to reduce function calls
-- Usually used with expensive function calls... i.e. calls that take a long time and/or use a lot of computing power
-- There are plenty of libraries you can use like memoizee (https://www.npmjs.com/package/memoizee)
+- Usually used with expensive function calls... i.e. calls that take a long time
+  and/or use a lot of computing power
+- There are plenty of libraries you can use like memoizee
+  (https://www.npmjs.com/package/memoizee)
 
 -->
 
@@ -225,8 +227,8 @@ const sum = (a, b) => {
 const memoizedSum = memoize(sum)
 
 const addResult1 = memoizedSum(1, 2)
-const addResult2 = memoizedSum(2, 1)
 console.log('addResult1', addResult1)
+const addResult2 = memoizedSum(2, 1)
 console.log('addResult2', addResult2)
 ```
 
@@ -241,8 +243,8 @@ const functionArgument = (fn, num1, num2) => fn(num1, num2)
 const memoizeFunctionArgument = memoize(functionArgument)
 
 const addResult = memoizeFunctionArgument(sum, 2, 2)
-const addResult2 = memoizeFunctionArgument(sum, 2, 2)
 console.log('addResult', addResult)
+const addResult2 = memoizeFunctionArgument(sum, 2, 2)
 console.log('addResult2', addResult2)
 
 
@@ -260,13 +262,13 @@ our function argument as `null`.
 
 # Step 6:
 
-A fundamental rule when using memoization is you should only use them with pure functions.
-There should be no side effects in the function and given a set of argument params to the function,
-we should always expect the same result.
+A fundamental rule when using memoization is you should only use them with pure
+functions. There should be no side effects in the function and given a set of
+argument params to the function, we should always expect the same result.
 
-Since the variable c is outside of the scoped function, it is not pure. The final result should be 5
-but the memoization library does not know the variable c has been updated and sees the inputs are the
-same so it returns the wrong result of 4.
+Since the variable c is outside of the scoped function, it is not pure. The final
+result should be 5 but the memoization library does not know the variable c has
+been updated and sees the inputs are the same so it returns the wrong result of 4.
 
 ```javascript
 let c = 1
