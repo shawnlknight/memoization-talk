@@ -17,10 +17,10 @@ class: invert
   h6 {
     color: #ff7675;
   }
-
-  code {
-    background: pink;
+  li {
+    font-size: 30px;
   }
+
 </style>
 <!--
 
@@ -321,199 +321,22 @@ Likewise, be careful with using this technique on DB calls.
 
 ---
 
-### React.memo & useMemo
-
----
 <!--
 
-React.memo is a higher order component. It’s similar to React.PureComponent but
-for function components instead of classes.
+React.memo, useCallback, & useMemo
 
-If your function component renders the same result given the same props, you
-can wrap it in a call to React.memo for a performance boost in some cases by
-memoizing the result. This means that React will skip rendering the component,
-and reuse the last rendered result.
-
-React.memo only checks for prop changes. If your function component wrapped in
-React.memo has a useState or useContext Hook in its implementation, it will still
-re-render when state or context change.
-
-By default it will only shallowly compare complex objects in the props object.
-If you want control over the comparison, you can also provide a custom comparison
-function as the second argument.
+Resources:
+https://reactjs.org/docs/react-api.html#reactmemo
+https://reactjs.org/docs/hooks-reference.html#usecallback
+https://www.youtube.com/watch?v=3cYtqrNUiVw
 
 -->
 
-### React.memo
-
-```javascript
-const MyComponent = React.memo(function MyComponent(props) {
-  /* render using props */
-})
-```
+### React.memo, useCallback, & useMemo
 
 ---
 
-#### React.memo example
-
-```javascript
-class CounterComponent extends Component {
-  state = { buttonPressedCount: 0 }
-  render() {
-    const { buttonPressedCount } = this.state
-    return (
-      <div className="new-component">
-        <h4>Button Pressed Count: {buttonPressedCount}</h4>
-        <button
-          onClick={() =>
-            this.setState({ buttonPressedCount: buttonPressedCount + 1 })
-          }
-        >
-          Increase Count
-        </button>
-        <Banner type="info" />
-      </div>
-    )
-  }
-}
-```
-
-<!--
-In our CounterComponent, every time we click the button we
-increase the buttonPressedCount variable which causes a re-render
-which is what you would expect. The problem with this is that the
-Banner component also re-renders even though the props being passed
-to it haven’t changed.
--->
-
----
-
-#### Banner component
-
-```javascript
-const Banner = props => {
-  const { type } = props
-
-  if (type === "info") {
-    return <div className="info-banner">I am an info banner</div>
-  }
-  return <div className="default-banner">I am an default banner</div>
-}
-```
-
----
-
-<!--
-To circumvent this, we use memo which acts like PureComponent
-in the fact that it will stop re-renders when the props haven’t
-changed. Our code updated looks like
--->
-
-#### Banner component with memo
-
-```javascript
-const Banner = React.memo(props => {
-  const { type } = props
-
-  if (type === "info") {
-    return <div className="info-banner">I am an info banner</div>
-  }
-  return <div className="default-banner">I am an default banner</div>
-})
-```
-
----
-
-<!--
-
-# useMemo
-
-Returns a memoized value.
-
-Pass a “create” function and an array of dependencies. useMemo will only
-recompute the memoized value when one of the dependencies has changed. This
-optimization helps to avoid expensive calculations on every render.
-
-Remember that the function passed to useMemo runs during rendering. Don’t
-do anything there that you wouldn’t normally do while rendering. For example,
-side effects belong in useEffect, not useMemo.
-
-If no array is provided, a new value will be computed on every render.
-
-You may rely on useMemo as a performance optimization, not as a semantic
-guarantee. In the future, React may choose to “forget” some previously
-memoized values and recalculate them on next render, e.g. to free memory
-for offscreen components. Write your code so that it still works without
-useMemo — and then add it to optimize performance.
-
--->
-
-### useMemo
-
-```javascript
-const memoizedValue = useMemo(() => {
-  return computeExpensiveValue(a, b), [a, b]
-})
-```
-
----
-
-<!--
-In this example, the useMemo function would run on the first render.
-It would block the thread until the expensive functions complete, as
-useMemo runs in the render.
-
-The expensive functions would never fire off again if listOfItems never
-changed and we would still get the return value from them. It would make
-these expensive functions seem instantaneous.
-This is ideal of you have an expensive, synchronous function or two.
-
-*NOTE: Every value referenced inside the function should also appear in the
-dependencies array
-Dependency array should be: [listOfItems, props.first, props.second]
--->
-
-### useMemo example
-
-```javascript
-const List = useMemo(
-  () =>
-  listOfItems.map(item => ({
-    ...item,
-    itemProp1: expensiveFunction(props.first),
-    itemProp2: anotherPriceyFunction(props.second)
-  })),
-  [listOfItems]
-)
-```
-
----
-
-<!--
-Returns a memoized callback.
-
-Pass an inline callback and an array of dependencies.
-useCallback will return a memoized version of the
-callback that only changes if one of the dependencies
-has changed. This is useful when passing callbacks to
-optimized child components that rely on reference
-equality to prevent unnecessary renders (e.g. shouldComponentUpdate)
--->
-
-### useCallback
-
-```javascript
-const memoizedCallback = useCallback(
-  () => {
-    doSomething(a, b);
-  },
-  [a, b],
-)
-```
-
----
-
-### Resources
+#### Resources
 
 * https://dev.to/nas5w/what-is-memoization-4lod
 * https://medium.com/better-programming/react-memo-vs-memoize-71f85eb4e1a
@@ -522,3 +345,4 @@ const memoizedCallback = useCallback(
 * https://reactjs.org/docs/react-api.html#reactmemo
 * https://www.digitalocean.com/community/tutorials/react-usememo
 * https://www.digitalocean.com/community/tutorials/react-learning-react-memo
+* https://www.youtube.com/watch?v=3cYtqrNUiVw
