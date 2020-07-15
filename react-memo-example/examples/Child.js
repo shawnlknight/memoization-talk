@@ -9,6 +9,7 @@ const Child = props => {
     for (let i = 0; i < 500_000_000; i++) {
       output++
     }
+    return output
   }, [])
 
   // Without useMemo example

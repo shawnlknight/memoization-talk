@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react'
+import React, {useState} from 'react'
 import './App.css'
 import Child from './Child'
 
