@@ -13,7 +13,7 @@ function App() {
         <h1>Parent component: {counter}</h1>
         <button onClick={() => setCounter(counter + 1)}>+1</button>
         <div>
-          <input type="text" onChange={e => setInput(e.target.value)} value={input}/>
+          <input placeholder="text input" class="text-input" type="text" onChange={e => setInput(e.target.value)} value={input}/>
         </div>
         <Child counter={counter} updateCounter={updateCounterFromChild} />
       </div>
