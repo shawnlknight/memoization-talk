@@ -19,10 +19,10 @@ const Child = props => {
   // }
 
   return (
-    <div className='child'>
+    <div className='child component-container'>
       <h2>Child component: {counter}</h2>
-      <h3>Computed value: {number}</h3>
       <button onClick={() => updateCounter(counter + 1)}>+1</button>
+      <h3>Computed value: {number}</h3>
     </div>
   )
 }

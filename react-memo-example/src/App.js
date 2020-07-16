@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="parent">
+      <div className="parent component-container">
         <h1>Parent component: {counter}</h1>
         <button onClick={() => setCounter(counter + 1)}>+1</button>
         <Child />
