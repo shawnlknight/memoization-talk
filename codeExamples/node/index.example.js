@@ -139,6 +139,8 @@ console.log('subtractResult', subtractResult)
 // The first time it runs, our cache key gets set as '[null,2,2]' b/c JSON.stringify sets
 //our function argument as `null`.
 
+// See https://www.npmjs.com/package/fast-memoize#function-arguments on how they solve for this
+
 // ---------------------------------------------------
 
 /*
