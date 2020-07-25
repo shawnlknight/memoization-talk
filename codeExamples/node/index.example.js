@@ -172,3 +172,18 @@ console.log(memAdd(1, 2))
 // 4
 // 4
 // 4
+
+// Lets fix this!
+let c = 0
+const sideEffectAdd = (a, b, c) => {
+  console.log('sideEffectAdd')
+  return a + b + c
+}
+
+const memAdd = memoize(sideEffectAdd)
+console.log(memAdd(1, 2, c))
+console.log(memAdd(1, 2, c))
+c++
+console.log('c: ', c)
+console.log(memAdd(1, 2, c))
+console.log(memAdd(1, 2, c))
