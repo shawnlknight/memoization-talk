@@ -5,7 +5,7 @@ import Child from './Child'
 function App() {
   const [counter, setCounter] = useState(0)
   const [input, setInput] = useState('')
-  const updateCounterFromChild = useCallback(() => setCounter(counter + 1), [counter])
+  const updateCounter = useCallback(() => setCounter(counter + 1), [counter])
 
   return (
     <div className="App">
@@ -21,7 +21,7 @@ function App() {
             onChange={e => setInput(e.target.value)}
             value={input}/>
         </div>
-        <Child counter={counter} updateCounter={updateCounterFromChild} />
+        <Child counter={counter} updateCounter={updateCounter} />
       </div>
     </div>
   )
