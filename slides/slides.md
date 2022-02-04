@@ -4,6 +4,7 @@ paginate: true
 theme: uncover
 class: invert
 ---
+
 <style>
   section {
     background: #2d3436 !important;
@@ -40,7 +41,7 @@ Explain why I came across memoization.
 
 ### Shawn Leberknight
 
-*Software Engineer* - **Somo Global**
+_Software Engineer_
 
 ---
 
@@ -64,9 +65,9 @@ So what exactly is memoization?
 
 ### How does it work?
 
-* Caching the values that the function returns after its initial execution.
-* If the input values remain the same, the memoized function returns the cached response.
-* The program does not have to recalculate anything.
+- Caching the values that the function returns after its initial execution.
+- If the input values remain the same, the memoized function returns the cached response.
+- The program does not have to recalculate anything.
 
 ---
 
@@ -87,8 +88,8 @@ Before memoization
 
 ```javascript
 function sum(a, b) {
- console.log('add')
- return a + b
+  console.log('add')
+  return a + b
 }
 console.log(sum(1, 2))
 console.log(sum(1, 2))
@@ -98,8 +99,8 @@ console.log(sum(1, 2))
 // 3
 // add
 // 3
-
 ```
+
 ---
 
 <!--
@@ -114,8 +115,8 @@ After memoization
 
 ```javascript
 function sum(a, b) {
- console.log('add')
- return a + b
+  console.log('add')
+  return a + b
 }
 
 const memSum = memoize(sum)
@@ -126,7 +127,6 @@ console.log(memSum(1, 2))
 // add
 // 3
 // 3
-
 ```
 
 ---
@@ -158,9 +158,9 @@ Likewise, be careful with using this technique on DB calls.
 
 ### Network & database calls
 
-* Be wary of using memoization for this and know the possible issues
-* Expire cache after given period of time
-* Clear cache manually if needed
+- Be wary of using memoization for this and know the possible issues
+- Expire cache after given period of time
+- Clear cache manually if needed
 
 ---
 
@@ -181,11 +181,11 @@ https://www.youtube.com/watch?v=3cYtqrNUiVw
 
 #### Resources
 
-* https://dev.to/nas5w/what-is-memoization-4lod
-* https://medium.com/better-programming/react-memo-vs-memoize-71f85eb4e1a
-* https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19
-* https://reactjs.org/docs/hooks-reference.html#usememo
-* https://reactjs.org/docs/react-api.html#reactmemo
-* https://www.digitalocean.com/community/tutorials/react-usememo
-* https://www.digitalocean.com/community/tutorials/react-learning-react-memo
-* https://www.youtube.com/watch?v=3cYtqrNUiVw
+- https://dev.to/nas5w/what-is-memoization-4lod
+- https://medium.com/better-programming/react-memo-vs-memoize-71f85eb4e1a
+- https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19
+- https://reactjs.org/docs/hooks-reference.html#usememo
+- https://reactjs.org/docs/react-api.html#reactmemo
+- https://www.digitalocean.com/community/tutorials/react-usememo
+- https://www.digitalocean.com/community/tutorials/react-learning-react-memo
+- https://www.youtube.com/watch?v=3cYtqrNUiVw
