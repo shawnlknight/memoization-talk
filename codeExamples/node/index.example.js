@@ -2,7 +2,7 @@
 # Step 1:
 */
 
-const squareNum = num => num * num
+const squareNum = (num) => num * num
 
 const start = new Date()
 const result1 = squareNum(40000)
@@ -14,14 +14,13 @@ const result2 = squareNum(40000)
 console.log('result 2:', result2)
 console.log('process time:', new Date() - start2)
 
-
 // ---------------------------------------------------
 
 /*
 # Step 2:
 */
 
-const inefficientSquare = num => {
+const inefficientSquare = (num) => {
   let total = 0
   for (let i = 0; i < num; i++) {
     for (let j = 0; j < num; j++) {
@@ -41,7 +40,6 @@ const result2 = inefficientSquare(40000)
 console.log('result 2:', result2)
 console.log('process time:', new Date() - start2)
 
-
 // ---------------------------------------------------
 
 /*
@@ -56,32 +54,32 @@ or anything that you would not find in JSON.
 
 */
 
-const memoize = func => {
+const memoize = (func) => {
   // Create cache for results
   const results = {}
 
   return (...args) => {
+    console.log('args', args)
     console.log('results', results)
     // Create a key for our cache
     const argsKey = JSON.stringify(args)
     // Only execute func if no cache val
-    if(!results[argsKey]) {
+    if (!results[argsKey]) {
       results[argsKey] = func(...args)
     }
     return results[argsKey]
   }
 }
 
-const inefficientSquare = memoize(num => {
+const inefficientSquare = memoize((num) => {
   let total = 0
-  for(let i = 0; i < num; i++) {
-    for(let j = 0; j < num; j++) {
+  for (let i = 0; i < num; i++) {
+    for (let j = 0; j < num; j++) {
       total++
     }
   }
   return total
 })
-
 
 // ---------------------------------------------------
 
@@ -107,7 +105,6 @@ console.log('addResult1', addResult1)
 const addResult2 = memoizedSum(2, 1)
 console.log('addResult2', addResult2)
 
-
 // ---------------------------------------------------
 
 /*
@@ -128,13 +125,11 @@ console.log('addResult', addResult)
 const addResult2 = functionArgument(sum, 2, 2)
 console.log('addResult2', addResult2)
 
-
 const subtract = (a, b) => {
   return a - b
 }
 const subtractResult = functionArgument(subtract, 2, 2)
 console.log('subtractResult', subtractResult)
-
 
 // The first time it runs, our cache key gets set as '[null,2,2]' b/c JSON.stringify sets
 //our function argument as `null`.
@@ -155,11 +150,10 @@ result should be 5 but the memoization library does not know the variable c has
 been updated and sees the inputs are the same so it returns the wrong result of 4.
 */
 
-
 let c = 1
 const sideEffectAdd = (a, b) => {
- console.log('sideEffectAdd')
- return a + b + c
+  console.log('sideEffectAdd')
+  return a + b + c
 }
 const memAdd = memoize(sideEffectAdd)
 console.log(memAdd(1, 2))

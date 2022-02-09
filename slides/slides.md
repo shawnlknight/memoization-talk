@@ -87,7 +87,7 @@ different properties.
 Before memoization
 
 ```javascript
-function sum(a, b) {
+function sum(a: number, b: number) {
   console.log('add')
   return a + b
 }
@@ -114,7 +114,7 @@ So let's add some caching to this function!
 After memoization
 
 ```javascript
-function sum(a, b) {
+function sum(a: number, b: number) {
   console.log('add')
   return a + b
 }
