@@ -200,7 +200,7 @@ What if we wanted to memoize a function that takes in a function as an argument?
 # Step 6:
 */
 
-// let c = 1
+// let c = 0
 // const sideEffectAdd = (a, b) => {
 //   console.log('sideEffectAdd')
 //   return a + b + c
